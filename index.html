@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:400,600,700&amp;subset=latin-ext"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Przelicznik walut</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Przelicznik walut<span class="search-header"></span></h1>
+      <div class="converter-box">
+      <form class="conventer">
+        <div class="input-box amount-box">
+          <label for="amount" class="convertor-label">Kwota</label>
+          <input type="text" name="amount" id="amount" class="form-control" />
+        </div>
+        <div class="input-box from-box">
+          <label for="from-currency" class="convertor-label">Przelicz z</label>
+          <input type="text" id="from-currency-filter">
+          <div class="dropdown-field from-currency"></div>
+        </div>
+        <div class="arrows"><p>&lrarr;</p></div>       
+        <div class="input-box to-box">
+          <label for="to-currency" class="convertor-label">Przelicz na</label>
+          <input type="text" id="to-currency-filter">
+          <div class="dropdown-field to-currency"></div>
+        </div>
+       <button id="calculate-btn">Przelicz</button>
+      </form>
+      <div class="results-box">
+          <p class="converted-amount">100 USD = </p>
+          <p class="conversion-result">933.41 SEK</p>
+          <p class="rate">Przelicznik (USD/SEK) wynosi 9.3341.</p>
+          <p class="from-rate-to-pln">Wartość 1 USD z 2019-02-22 to 3.8242 zł.</p>
+          <p class="to-rate-to-pln">Wartość 1 SEK z 2019-02-22 to 0.4097 zł.</p>
+          <div class="details"><p>* Główny wynik obliczeń został zaokrąglony do dwóch miejsc po przecinku.</p>
+            <p>Przeliczenia wg kursu NBP z dnia 2019-02-22.</p></div> 
+              
+      </div>
+      <div class="test">
+        <h2>Wyniki zapytań z API:</h2>
+        <ul class="results"></ul>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
