@@ -16,37 +16,230 @@
     <div class="container">
       <h1>Przelicznik walut<span class="search-header"></span></h1>
       <div class="converter-box">
-      <form class="conventer">
-        <div class="input-box amount-box">
-          <label for="amount" class="convertor-label">Kwota</label>
-          <input type="text" name="amount" id="amount" class="form-control" />
-        </div>
-        <div class="input-box from-box">
-          <label for="from-currency" class="convertor-label">Przelicz z</label>
-          <input type="text" id="from-currency-filter">
-          <div class="dropdown-field from-currency"></div>
-        </div>
-        <div class="arrows"><p>&lrarr;</p></div>       
-        <div class="input-box to-box">
-          <label for="to-currency" class="convertor-label">Przelicz na</label>
-          <input type="text" id="to-currency-filter">
-          <div class="dropdown-field to-currency"></div>
-        </div>
-       <button id="calculate-btn">Przelicz</button>
-      </form>
-      <div class="results-box">
-          <p class="converted-amount">100 USD = </p>
+        <form class="conventer">
+          <div class="input-box amount-box">
+            <label for="amount" class="convertor-label">Kwota</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="amount"
+                id="amount"
+                class="form-control"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="input-box currency-box from-box">
+            <label for="from-currency" class="convertor-label"
+              >Przelicz z</label
+            >
+            <div class="input-wrapper">
+              <input type="text" id="from-currency-filter" />
+            </div>
+            <div class="dropdown-list">
+              <div class="currency-wrapper">
+                <img src="img/australia.png" alt="flag of Australia" />
+                <p class="currency-code">AUD</p>
+                <p class="currency-name">Dolar australijski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/brazil.png" alt="flag of Brazil" />
+                <p class="currency-code">BRL</p>
+                <p class="currency-name">Real brazylijski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/bulgaria.png" alt="flag of Bulgaria" />
+                <p class="currency-code">BGN</p>
+                <p class="currency-name">Lew bułgarski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/canada.png" alt="flag of Canada" />
+                <p class="currency-code">CAD</p>
+                <p class="currency-name">Dolar kanadyjski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/chile.png" alt="flag of Chile" />
+                <p class="currency-code">CLP</p>
+                <p class="currency-name">Peso chilijskie</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/china.png" alt="flag of China" />
+                <p class="currency-code">CNY</p>
+                <p class="currency-name">Juan chiński</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/croatia.png" alt="flag of Croatia" />
+                <p class="currency-code">HRK</p>
+                <p class="currency-name">Kuna chorwacka</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/czech.png" alt="flag of Czech Republic" />
+                <p class="currency-code">CZK</p>
+                <p class="currency-name">Korona czeska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/denmark.png" alt="flag of Denmark" />
+                <p class="currency-code">DKK</p>
+                <p class="currency-name">Korona duńska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/eu.png" alt="flag of EU" />
+                <p class="currency-code">EUR</p>
+                <p class="currency-name">Euro</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/great-britain.png" alt="flag of Great Britain" />
+                <p class="currency-code">GBP</p>
+                <p class="currency-name">Funt szterling</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/hong-kong.png" alt="flag of HongKong" />
+                <p class="currency-code">HKD</p>
+                <p class="currency-name">Dolar Hongkongu</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/hungary.png" alt="flag of Hungary" />
+                <p class="currency-code">HUF</p>
+                <p class="currency-name">Forint węgierski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/iceland.png" alt="flag of Iceland" />
+                <p class="currency-code">ISK</p>
+                <p class="currency-name">Korona islandzka</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/india.png" alt="flag of India" />
+                <p class="currency-code">INR</p>
+                <p class="currency-name">Rupia indyjska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/indonesia.png" alt="flag of Indonesia" />
+                <p class="currency-code">IDR</p>
+                <p class="currency-name">Rupia indonezyjska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/israel.png" alt="flag of Israel" />
+                <p class="currency-code">ILS</p>
+                <p class="currency-name">Nowy szekel izraelski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/japan.png" alt="flag of Japan" />
+                <p class="currency-code">JPY</p>
+                <p class="currency-name">Jen japoński</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/malaysia.png" alt="flag of Malaysia" />
+                <p class="currency-code">MYR</p>
+                <p class="currency-name">Ringgit malezyjski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/mexico.png" alt="flag of Mexico" />
+                <p class="currency-code">MXN</p>
+                <p class="currency-name">Peso meksykańskie</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/new-zealand.png" alt="flag of New Zealand" />
+                <p class="currency-code">NZD</p>
+                <p class="currency-name">Dolar nowozelandzki</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/norway.png" alt="flag of Norway" />
+                <p class="currency-code">NOK</p>
+                <p class="currency-name">Korona norweska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/philippines.png" alt="flag of Philippines" />
+                <p class="currency-code">PHP</p>
+                <p class="currency-name">Peso filipińskie</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/poland.png" alt="flag of Poland" />
+                <p class="currency-code">PLN</p>
+                <p class="currency-name">Polski złoty</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/romania.png" alt="flag of Romania" />
+                <p class="currency-code">RON</p>
+                <p class="currency-name">Lej rumuński</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/russia.png" alt="flag of Russia" />
+                <p class="currency-code">RUB</p>
+                <p class="currency-name">Rubel rosyjski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/singapore.png" alt="flag of Singapore" />
+                <p class="currency-code">SGD</p>
+                <p class="currency-name">Dolar singapurski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/south-africa.png" alt="flag of South Africa" />
+                <p class="currency-code">ZAR</p>
+                <p class="currency-name">Rand południowoafrykański</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/south-korea.png" alt="flag of South Korea" />
+                <p class="currency-code">KRW</p>
+                <p class="currency-name">Won koreański</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/sweden.png" alt="flag of Sweden" />
+                <p class="currency-code">SEK</p>
+                <p class="currency-name">Korona szwedzka</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/switzerland.png" alt="flag of Switzerland" />
+                <p class="currency-code">CHF</p>
+                <p class="currency-name">Frank szwajcarski</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/thailand.png" alt="flag of Thailand" />
+                <p class="currency-code">THB</p>
+                <p class="currency-name">Bat tajlandzki</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/turkey.png" alt="flag of Turkey" />
+                <p class="currency-code">TRY</p>
+                <p class="currency-name">Lira turecka</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/ukraine.png" alt="flag of Ukraine" />
+                <p class="currency-code">UAH</p>
+                <p class="currency-name">Hrywna ukraińska</p>
+              </div>
+              <div class="currency-wrapper">
+                <img src="img/usa.png" alt="flag of United States of America" />
+                <p class="currency-code">USD</p>
+                <p class="currency-name">Dolar amerykański</p>
+              </div>
+            </div>
+          </div>
+          <div class="arrows"><p>&#x21C4;</p></div>
+          <div class="input-box currency-box to-box">
+            <label for="to-currency" class="convertor-label">Przelicz na</label>
+            <div class="input-wrapper">
+              <input type="text" id="to-currency-filter" />
+            </div>
+            <!-- <div class="dropdown-list to-currency">
+            <div class="currency-wrapper"><img src="img/pln.png" alt="flag of Poland"><p class="currency-code">PLN</p class=currency-name><p>Polski złoty</p></div>
+          </div> -->
+          </div>
+          <button id="calculate-btn">Przelicz</button>
+        </form>
+
+        <div class="results-box">
+          <p class="converted-amount">100 USD =</p>
           <p class="conversion-result">933.41 SEK</p>
           <p class="rate">Przelicznik (USD/SEK) wynosi 9.3341.</p>
-          <p class="from-rate-to-pln">Wartość 1 USD z 2019-02-22 to 3.8242 zł.</p>
-          <p class="to-rate-to-pln">Wartość 1 SEK z 2019-02-22 to 0.4097 zł.</p>
-          <div class="details"><p>* Główny wynik obliczeń został zaokrąglony do dwóch miejsc po przecinku.</p>
-            <p>Przeliczenia wg kursu NBP z dnia 2019-02-22.</p></div> 
-              
-      </div>
-      <div class="test">
-        <h2>Wyniki zapytań z API:</h2>
-        <ul class="results"></ul>
+          <p class="details">
+            1 USD wynosi 9.3341 SEK według średniego kursu NBP z dnia 2019-02-22
+          </p>
+        </div>
+
+        <div class="test">
+          <h2>Wyniki zapytań z API:</h2>
+          <ul class="results"></ul>
+        </div>
       </div>
     </div>
     <script src="app.js"></script>
