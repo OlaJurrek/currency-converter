@@ -1,7 +1,7 @@
 const results = document.querySelector(".results");
 
 function getRates() {
-  fetch("http://api.nbp.pl/api/exchangerates/tables/A")
+  fetch("http://api.nbp.pl/api/exchangerates/tables/B")
     .then(resp => resp.json())
     .then(resp => {
       console.log(resp);
@@ -27,10 +27,41 @@ function getRates() {
 //  console.log(resp);
 //})
 
-getRates();
+// getRates();
 
 function addResult(value) {
   const li = document.createElement("li");
   li.innerHTML = value;
   results.appendChild(li);
+}
+
+const fromCurrencyList = document.querySelector(".from-currency-list");
+const fromCurrencyBox = document.querySelector(".from-box");
+
+const toCurrencyList = document.querySelector(".to-currency-list");
+const toCurrencyBox = document.querySelector(".to-box");
+
+fromCurrencyList.addEventListener("click", selectFromCurrency);
+toCurrencyList.addEventListener("click", selectToCurrency);
+
+function selectToCurrency(e) {
+  const currency = getCurrencyData(e);
+  toCurrencyBox.replaceChild(currency, toCurrencyBox.children[1]);
+}
+
+function selectFromCurrency(e) {
+  const currency = getCurrencyData(e);
+  fromCurrencyBox.replaceChild(currency, fromCurrencyBox.children[1]);
+}
+
+function getCurrencyData(e) {
+  let currency;
+  if (e.target.className.includes("currency-wrapper")) {
+    currency = e.target;
+  } else if (e.target.parentElement.className.includes("currency-wrapper")) {
+    currency = e.target.parentElement;
+  } else {
+    return;
+  }
+  return currency.cloneNode(true);
 }
