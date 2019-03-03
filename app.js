@@ -35,12 +35,29 @@ function addResult(value) {
   results.appendChild(li);
 }
 
-// UI Variables
+// Main UI Variables
 const fromCurrencyList = document.querySelector(".from-currency-list");
 const fromCurrencyBox = document.querySelector(".from-box");
 
 const toCurrencyList = document.querySelector(".to-currency-list");
 const toCurrencyBox = document.querySelector(".to-box");
+
+const fromCurrency = fromCurrencyBox.querySelector(".currency-wrapper");
+const toCurrency = toCurrencyBox.querySelector(".currency-wrapper");
+
+// Show dropdownlist
+
+fromCurrency.addEventListener("click", toggleDropdownList);
+toCurrency.addEventListener("click", toggleDropdownList);
+
+function toggleDropdownList(e) {
+  const dropdownList = e.currentTarget.nextElementSibling;
+  if (dropdownList.classList.contains("show")) {
+    dropdownList.classList.remove("show");
+  } else {
+    dropdownList.classList.add("show");
+  }
+}
 
 // Select currency from dropdown list
 fromCurrencyList.addEventListener("click", selectFromCurrency);

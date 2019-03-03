@@ -82,6 +82,8 @@ input:focus {
 /* Dropdown-list */
 
 .dropdown-list {
+  display: none;
+  /* visibility: hidden; */
   position: absolute;
   top: 102%;
   left: 0;
@@ -89,6 +91,12 @@ input:focus {
   max-height: 275px;
   overflow-y: auto;
   background-color: #fff;
+}
+
+.dropdown-list.show {
+  display: block;
+  /* visibility: hidden; */
+  /* visibility: visible; */
 }
 
 .filter-wrapper {
