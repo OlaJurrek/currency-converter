@@ -46,6 +46,7 @@ const toCurrencyBox = document.querySelector(".to-box");
 fromCurrencyList.addEventListener("click", selectFromCurrency);
 toCurrencyList.addEventListener("click", selectToCurrency);
 
+// Is it possible to make one function instead of two very similar?
 function selectToCurrency(e) {
   const currency = getCurrencyData(e);
   if (currency) {
@@ -73,18 +74,19 @@ function getCurrencyData(e) {
 }
 
 // Currency filter
-const fromCurrencyFilterInput = document.getElementById("from-currency-filter");
-const toCurrencyFilterInput = document.getElementById("to-currency-filter");
+const fromCurrencyFilter = document.getElementById("from-currency-filter");
+const toCurrencyFilter = document.getElementById("to-currency-filter");
 
-// Get all from currencies despite the first one
-const fromCurrencies = fromCurrencyList.querySelectorAll(".currency-wrapper");
-// fromCurrencies = Array.from(fromCurrencies).slice(1);
+fromCurrencyFilter.addEventListener("keyup", currencyFilter);
+toCurrencyFilter.addEventListener("keyup", currencyFilter);
 
-fromCurrencyFilterInput.addEventListener("keyup", fromCurrencyFilter);
-
-function fromCurrencyFilter(e) {
-  for (currency of fromCurrencies) {
-    const searchedCurrency = e.target.value.toLowerCase();
+function currencyFilter(e) {
+  const searchedCurrency = e.target.value.toLowerCase();
+  // Get only divs with currencies data below the search field
+  let currencies = e.target.parentElement.parentElement;
+  currencies = currencies.querySelectorAll(".currency-wrapper");
+  // Filter currencies divs
+  for (currency of currencies) {
     const name = currency
       .querySelector(".currency-name")
       .textContent.toLowerCase();
@@ -96,31 +98,5 @@ function fromCurrencyFilter(e) {
     } else {
       currency.style.display = "none";
     }
-    // console.log(e.target.value, name, code);
   }
 }
-
-// toCurrencyFilter.addEventListener("keyup", currencyFilter);
-
-// function currencyFilter(e) {
-//   const dropdownList = e.target.parentElement.parentElement;
-//   // const currencies = Array.from(dropdownList.children).slice(2);
-//   // console.log(currencies);
-//   for (currency of dropdownList.children) {
-//     if (currency.className.includes("currency-wrapper")) {
-//       const name = currency.querySelector(".currency-name");
-//       const code = currency.querySelector(".currency-code");
-//       if (
-//         name.textContent.indexOf(e.target.value) !== -1 ||
-//         code.textContent.indexOf(e.target.value) !== -1
-//       ) {
-//         currency.style.display = "grid";
-//         // console.log(code.textContent);
-//         // console.log(name.textContent);
-//         console.log(e.target.value);
-//       } else {
-//         // currency.style.display = "none";
-//       }
-//     }
-//   }
-// }
