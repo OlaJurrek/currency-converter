@@ -90,7 +90,6 @@ input:focus {
 
 .dropdown-list {
   display: none;
-  /* visibility: hidden; */
   position: absolute;
   top: 102%;
   left: 0;
@@ -100,10 +99,8 @@ input:focus {
   background-color: #fff;
 }
 
-.dropdown-list.show {
+.show {
   display: block;
-  /* visibility: hidden; */
-  /* visibility: visible; */
 }
 
 .filter-wrapper {
@@ -238,6 +235,15 @@ input:focus {
   .conventer {
     grid-template-columns: 1fr;
   }
+
+  .show {
+    position: fixed;
+    top: 0;
+    max-height: 100%;
+    margin: 20px;
+    z-index: 2;
+  }
+
   .arrows {
     display: none;
   }
