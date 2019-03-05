@@ -1,93 +1,150 @@
-const results = document.querySelector(".results");
-
-function getRates() {
-  fetch("http://api.nbp.pl/api/exchangerates/tables/B")
-    .then(resp => resp.json())
-    .then(resp => {
-      console.log(resp);
-      console.log(resp[0].no);
-      addResult(resp[0].effectiveDate);
-
-      resp[0].rates.forEach(function(rate) {
-        addResult(rate.code);
-      });
-
-      //   addResult(resp.url);
-      //   addResult(resp.body);
-      //   addResult(resp.type);
-      //   addResult(resp.status);
-      //   addResult(resp.statusText);
-      //   addResult(resp.headers.get("Content-Type"));
-      //   addResult(resp.headers.get("Date"));
-    });
-}
-
-// fetch("https://jsonplaceholder.typicode.com/users")
-//.then(resp => {
-//  console.log(resp);
-//})
-
-// getRates();
-
-function addResult(value) {
-  const li = document.createElement("li");
-  li.innerHTML = value;
-  results.appendChild(li);
-}
+// Main application data variables
+const officialCurrency = "PLN";
+const officialRatesSource = "http://api.nbp.pl/api/exchangerates/tables/A";
 
 // Main UI Variables
+
+const amountBox = document.getElementById("amount");
+
 const fromCurrencyList = document.querySelector(".from-currency-list");
 const fromCurrencyBox = document.querySelector(".from-box");
 
 const toCurrencyList = document.querySelector(".to-currency-list");
 const toCurrencyBox = document.querySelector(".to-box");
 
-const fromCurrency = fromCurrencyBox.querySelector(".currency-wrapper");
-const toCurrency = toCurrencyBox.querySelector(".currency-wrapper");
+const fromCurrency = document.getElementById("from-this-currency");
+const toCurrency = document.getElementById("to-this-currency");
 
-// Show dropdownlist
+const convertedAmount = document.querySelector(".converted-amount");
+const details = document.querySelector(".details");
+const conversionResult = document.querySelector(".conversion-result");
 
-fromCurrency.addEventListener("click", toggleDropdownList);
-toCurrency.addEventListener("click", toggleDropdownList);
+// Convert currency
+const calculateBtn = document.getElementById("calculate-btn");
 
-function toggleDropdownList(e) {
+calculateBtn.addEventListener("click", convertCurrency);
+
+function convertCurrency(e) {
+  // what is scope of fetch? If it could 'see' only global variables??
+
+  // const amount = document.getElementById("amount").value;
+  // const fromCurrencyCode = document.querySelector(".from-box .currency-code")
+  //   .textContent;
+  // const toCurrencyCode = document.querySelector(".to-box .currency-code")
+  //   .textContent;
+
+  getRates();
+
+  e.preventDefault();
+}
+
+function getRates() {
+  fetch("http://api.nbp.pl/api/exchangerates/tables/A")
+    .then(resp => resp.json())
+    .then(resp => {
+      const rates = resp[0].rates;
+      const date = resp[0].effectiveDate;
+      const fromCurrencyCode = fromCurrency.querySelector(".currency-code")
+        .textContent;
+
+      const toCurrencyCode = toCurrency.querySelector(".currency-code")
+        .textContent;
+      let amount = document.getElementById("amount").value;
+
+      // if (typeof amount === "number") {
+
+      if (fromCurrencyCode === "PLN") {
+        const toRate = getCurrencyRate(rates, toCurrencyCode);
+        const result = convertZlotyTo(amount, toRate);
+        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
+        // console.log(result);
+      } else if (toCurrencyCode === "PLN") {
+        const fromRate = getCurrencyRate(rates, fromCurrencyCode);
+        const result = convertToZloty(amount, fromRate);
+        // console.log(result);
+        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
+      } else {
+        const fromRate = getCurrencyRate(rates, fromCurrencyCode);
+        const toRate = getCurrencyRate(rates, toCurrencyCode);
+        const rate = fromRate / toRate;
+        let result = amount * rate;
+        result = result.toFixed(2);
+        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
+      }
+      // } else {
+      // displayError();
+      // }
+    });
+}
+
+function convertZlotyTo(amount, rate) {
+  const result = amount / rate;
+  return result.toFixed(2);
+}
+
+function convertToZloty(amount, rate) {
+  const result = amount * rate;
+  return result.toFixed(2);
+}
+
+function convertForeignCurrencies(fromCode, toCode) {}
+
+function getCurrencyRate(rates, code) {
+  const currencyData = rates.find(rate => rate.code === code);
+  return currencyData.mid;
+}
+
+// Parameters could be pass as an array??
+function displayResult(amount, result, fromCode, toCode, date) {
+  convertedAmount.innerHTML = `${amount} ${fromCode} =`;
+  conversionResult.innerHTML = `${result} ${toCode}`;
+  details.innerHTML = `Kalkulator przeliczył waluty według średniego kursu NBP z dnia ${date}`;
+}
+
+// to improve!!! is off now
+function displayError() {
+  convertedAmount.textContent = "Podana kwota musi być liczbą.";
+  amount.style.boxShadow = "0 0 4px 1px red";
+}
+
+// Show dropdown list
+fromCurrency.addEventListener("click", showDropdownList);
+toCurrency.addEventListener("click", showDropdownList);
+
+function showDropdownList(e) {
   const dropdownList = e.currentTarget.nextElementSibling;
-  if (dropdownList.classList.contains("show")) {
-    dropdownList.classList.remove("show");
-  } else {
+  if (!dropdownList.classList.contains("show")) {
     dropdownList.classList.add("show");
+  } else {
+    hideDropdownList(dropdownList);
   }
 }
 
-// Select currency from dropdown list
-fromCurrencyList.addEventListener("click", selectFromCurrency);
-toCurrencyList.addEventListener("click", selectToCurrency);
-
-// Is it possible to make one function instead of two very similar?
-function selectToCurrency(e) {
-  const currency = getCurrencyData(e);
-  if (currency) {
-    toCurrencyBox.replaceChild(currency, toCurrencyBox.children[1]);
-  }
+// Hide dropdown list
+function hideDropdownList(dropdownList) {
+  dropdownList.classList.remove("show");
 }
 
-function selectFromCurrency(e) {
-  const currency = getCurrencyData(e);
-  if (currency) {
-    fromCurrencyBox.replaceChild(currency, fromCurrencyBox.children[1]);
-  }
-}
+// Select currency from a dropdown list and hide the list when it's done
+fromCurrencyList.addEventListener("click", selectCurrency);
+toCurrencyList.addEventListener("click", selectCurrency);
 
-function getCurrencyData(e) {
-  let currency;
+function selectCurrency(e) {
+  const selectedCurrencySlot = e.currentTarget.previousElementSibling;
+  const currencyList = e.currentTarget;
+
+  let selectedCurrency;
   if (e.target.className.includes("currency-wrapper")) {
-    currency = e.target;
+    selectedCurrency = e.target;
   } else if (e.target.parentElement.className.includes("currency-wrapper")) {
-    currency = e.target.parentElement;
+    selectedCurrency = e.target.parentElement;
   } else {
     return;
   }
-  return currency.cloneNode(true);
+
+  const currency = selectedCurrency.cloneNode(true);
+  selectedCurrencySlot.replaceChild(currency, selectedCurrencySlot.children[0]);
+  hideDropdownList(currencyList);
 }
 
 // Currency filter
@@ -116,4 +173,17 @@ function currencyFilter(e) {
       currency.style.display = "none";
     }
   }
+}
+
+// Swap currencies using arrow icon
+const arrows = document.querySelector(".arrows");
+
+arrows.addEventListener("click", swapCurrencies);
+
+function swapCurrencies() {
+  const fromCurrencyClone = fromCurrency.children[0].cloneNode(true);
+  const toCurrencyClone = toCurrency.children[0].cloneNode(true);
+
+  fromCurrency.replaceChild(toCurrencyClone, fromCurrency.children[0]);
+  toCurrency.replaceChild(fromCurrencyClone, toCurrency.children[0]);
 }
