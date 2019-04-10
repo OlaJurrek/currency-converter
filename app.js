@@ -1,6 +1,6 @@
 // Main application data variables
 const officialCurrency = "PLN";
-const officialRatesSource = "http://api.nbp.pl/api/exchangerates/tables/A";
+const officialRatesSource = "https://api.nbp.pl/api/exchangerates/tables/A";
 
 // Main UI Variables
 
@@ -120,9 +120,13 @@ function showDropdownList(e) {
   }
 }
 
-// Hide dropdown list
+// Build seperate function for cleaning filter input??
+// Hide dropdown list and clear filter input
 function hideDropdownList(dropdownList) {
   dropdownList.classList.remove("show");
+  const filterInput = dropdownList.querySelector(".filter");
+  filterInput.value = "";
+  filterInput.placeholder = "wpisz walutę";
 }
 
 // Select currency from a dropdown list and hide the list when it's done

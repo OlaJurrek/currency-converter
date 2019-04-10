@@ -94,7 +94,7 @@ input:focus {
   top: 102%;
   left: 0;
   right: 0;
-  max-height: 275px;
+  max-height: 320px;
   overflow-y: auto;
   background-color: #fff;
 }
