@@ -39,7 +39,7 @@ function convertCurrency(e) {
 }
 
 function getRates() {
-  fetch("http://api.nbp.pl/api/exchangerates/tables/A")
+  fetch("https://api.nbp.pl/api/exchangerates/tables/A")
     .then(resp => resp.json())
     .then(resp => {
       const rates = resp[0].rates;
