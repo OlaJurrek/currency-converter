@@ -22,16 +22,7 @@ const calculateBtn = document.getElementById("calculate-btn");
 calculateBtn.addEventListener("click", convertCurrency);
 
 function convertCurrency(e) {
-  // what is scope of fetch? If it could 'see' only global variables??
-
-  // const amount = document.getElementById("amount").value;
-  // const fromCurrencyCode = document.querySelector(".from-box .currency-code")
-  //   .textContent;
-  // const toCurrencyCode = document.querySelector(".to-box .currency-code")
-  //   .textContent;
-
   getRates();
-
   e.preventDefault();
 }
 
@@ -39,62 +30,60 @@ function getRates() {
   fetch("https://api.nbp.pl/api/exchangerates/tables/A")
     .then(resp => resp.json())
     .then(resp => {
-      const rates = resp[0].rates;
-      const date = resp[0].effectiveDate;
-      const fromCurrencyCode = fromCurrency.querySelector(".currency-code")
-        .textContent;
-
-      const toCurrencyCode = toCurrency.querySelector(".currency-code")
-        .textContent;
-      let amount = document.getElementById("amount").value;
-
-      // if (typeof amount === "number") {
-
-      if (fromCurrencyCode === "PLN") {
-        const toRate = getCurrencyRate(rates, toCurrencyCode);
-        const result = convertZlotyTo(amount, toRate);
-        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
-        // console.log(result);
-      } else if (toCurrencyCode === "PLN") {
-        const fromRate = getCurrencyRate(rates, fromCurrencyCode);
-        const result = convertToZloty(amount, fromRate);
-        // console.log(result);
-        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
-      } else {
-        const fromRate = getCurrencyRate(rates, fromCurrencyCode);
-        const toRate = getCurrencyRate(rates, toCurrencyCode);
-        const rate = fromRate / toRate;
-        let result = amount * rate;
-        result = result.toFixed(2);
-        displayResult(amount, result, fromCurrencyCode, toCurrencyCode, date);
-      }
-      // } else {
-      // displayError();
-      // }
+      const data = gatherData(resp);
+      calculate(data);
     });
 }
 
-function convertZlotyTo(amount, rate) {
-  const result = amount / rate;
-  return result.toFixed(2);
+function gatherData(resp) {
+  const data = {
+    rates: resp[0].rates,
+    date: resp[0].effectiveDate,
+    fromCurrencyCode: fromCurrency.querySelector(".currency-code").textContent,
+    toCurrencyCode: toCurrency.querySelector(".currency-code").textContent,
+    amount: document.getElementById("amount").value
+  };
+  return ({ rates, date, fromCurrencyCode, toCurrencyCode, amount } = data);
 }
 
-function convertToZloty(amount, rate) {
-  const result = amount * rate;
-  return result.toFixed(2);
+function calculate(data) {
+  if (fromCurrencyCode === "PLN") {
+    fromZloty(data);
+  } else if (toCurrencyCode === "PLN") {
+    toZloty(data);
+  } else {
+    otherCurrencies(data);
+  }
 }
 
-function convertForeignCurrencies(fromCode, toCode) {}
+function fromZloty(data) {
+  data.rate = getCurrencyRate(rates, toCurrencyCode);
+  data.result = amount * data.rate;
+  displayResult(data);
+}
+
+function toZloty(data) {
+  data.rate = getCurrencyRate(rates, fromCurrencyCode);
+  data.result = amount / data.rate;
+  displayResult(data);
+}
+
+function otherCurrencies(data) {
+  const fromRate = getCurrencyRate(rates, fromCurrencyCode);
+  const toRate = getCurrencyRate(rates, toCurrencyCode);
+  const rate = fromRate / toRate;
+  data.result = amount * rate;
+  displayResult(data);
+}
 
 function getCurrencyRate(rates, code) {
   const currencyData = rates.find(rate => rate.code === code);
   return currencyData.mid;
 }
 
-// Parameters could be pass as an array??
-function displayResult(amount, result, fromCode, toCode, date) {
-  convertedAmount.innerHTML = `${amount} ${fromCode} =`;
-  conversionResult.innerHTML = `${result} ${toCode}`;
+function displayResult(data) {
+  convertedAmount.innerHTML = `${amount} ${fromCurrencyCode} =`;
+  conversionResult.innerHTML = `${data.result.toFixed(2)} ${toCurrencyCode}`;
   details.innerHTML = `Kalkulator przeliczył waluty według średniego kursu NBP z dnia ${date}`;
 }
 
@@ -117,10 +106,14 @@ function showDropdownList(e) {
   }
 }
 
-// Build seperate function for cleaning filter input??
 // Hide dropdown list and clear filter input
 function hideDropdownList(dropdownList) {
   dropdownList.classList.remove("show");
+  clearFilter(dropdownList);
+}
+
+// Clear filter
+function clearFilter(dropdownList) {
   const filterInput = dropdownList.querySelector(".filter");
   filterInput.value = "";
   filterInput.placeholder = "wpisz walutę";
@@ -198,7 +191,7 @@ function currencyFilter(e) {
   }
 }
 
-// Swap currencies using arrow icon
+// Swap currencies using arrow icons
 const arrows = document.querySelector(".arrows");
 
 arrows.addEventListener("click", swapCurrencies);
