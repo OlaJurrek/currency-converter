@@ -1,38 +1,27 @@
 // Main UI Variables
-const amountBox = document.getElementById("amount");
-
+// Dropdown lists
 const dropdownLists = document.querySelectorAll(".dropdown-list");
-
 const fromCurrencyList = document.querySelector(".from-currency-list");
-const fromCurrencyBox = document.querySelector(".from-box");
-
 const toCurrencyList = document.querySelector(".to-currency-list");
-const toCurrencyBox = document.querySelector(".to-box");
-
 const fromCurrency = document.getElementById("from-this-currency");
 const toCurrency = document.getElementById("to-this-currency");
-
+//Results
 const convertedAmount = document.querySelector(".converted-amount");
 const details = document.querySelector(".details");
 const conversionResult = document.querySelector(".conversion-result");
 
 // Convert currency
 const calculateBtn = document.getElementById("calculate-btn");
-
 calculateBtn.addEventListener("click", convertCurrency);
 
 function convertCurrency(e) {
-  getRates();
-  e.preventDefault();
-}
-
-function getRates() {
   fetch("https://api.nbp.pl/api/exchangerates/tables/A")
     .then(resp => resp.json())
     .then(resp => {
       const data = gatherData(resp);
       calculate(data);
     });
+  e.preventDefault();
 }
 
 function gatherData(resp) {
@@ -117,6 +106,8 @@ function clearFilter(dropdownList) {
   const filterInput = dropdownList.querySelector(".filter");
   filterInput.value = "";
   filterInput.placeholder = "wpisz walutę";
+  const currencies = dropdownList.querySelectorAll(".currency-wrapper");
+  currencies.forEach(currency => (currency.style.display = "grid"));
 }
 
 // Select currency from a dropdown list and hide the list when it's done
