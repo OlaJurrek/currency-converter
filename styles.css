@@ -1,3 +1,4 @@
+/* Basic styles */
 * {
   box-sizing: border-box;
 }
@@ -40,7 +41,6 @@ h1 {
 }
 
 /*  Form */
-
 .conventer {
   display: grid;
   grid-template-columns: 1fr 1fr 40px 1fr 90px;
@@ -87,7 +87,6 @@ input:focus {
 }
 
 /* Dropdown-list */
-
 .dropdown-list {
   display: none;
   position: absolute;
@@ -103,6 +102,22 @@ input:focus {
   display: block;
 }
 
+/* Down arrows */
+#from-this-currency,
+#to-this-currency {
+  position: relative;
+  cursor: pointer;
+}
+
+#from-this-currency::after,
+#to-this-currency::after {
+  position: absolute;
+  top: 35%;
+  right: 10px;
+  content: url(img/down2.png);
+}
+
+/* Filter */
 .filter-wrapper {
   margin-bottom: 3px;
   border-bottom: 1.5px solid transparent;
@@ -124,9 +139,7 @@ input:focus {
     "flag code"
     "flag name";
   align-items: center;
-  /* max-width: 250px; */
   padding: 5px 10px;
-  /* border-radius: 5px; */
   background-color: #fff;
 }
 
@@ -160,7 +173,6 @@ input:focus {
 }
 
 /* Arrows */
-
 .arrows {
   display: flex;
   justify-content: center;
@@ -171,8 +183,8 @@ input:focus {
 .arrows p {
   padding: 5px 3px;
   border: 1.5px solid transparent;
-  /* border-radius: 5px; */
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .arrows p:hover {
@@ -180,19 +192,18 @@ input:focus {
 }
 
 /* Calculate button */
-
 #calculate-btn {
   height: 47.5px;
   align-self: end;
   background-color: var(--decorative-color);
   border: none;
-  /* border-radius: 5px; */
   font-family: inherit;
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-color);
   letter-spacing: 1px;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 #calculate-btn:hover {
@@ -205,11 +216,9 @@ input:focus {
 }
 
 /*  Results */
-
 .results-box {
   margin: 35px auto;
   text-align: center;
-  /* font-weight: 600; */
   font-size: 1.1rem;
   line-height: 1.2;
 }
@@ -229,8 +238,12 @@ input:focus {
   font-size: 0.9rem;
 }
 
-/* Smaller screen styles */
+/* Footer */
+footer {
+  text-align: center;
+}
 
+/* Smaller screen styles */
 @media (max-width: 900px) {
   .conventer {
     grid-template-columns: 1fr;
