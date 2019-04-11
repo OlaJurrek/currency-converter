@@ -1,10 +1,7 @@
-// Main application data variables
-const officialCurrency = "PLN";
-const officialRatesSource = "https://api.nbp.pl/api/exchangerates/tables/A";
-
 // Main UI Variables
-
 const amountBox = document.getElementById("amount");
+
+const dropdownLists = document.querySelectorAll(".dropdown-list");
 
 const fromCurrencyList = document.querySelector(".from-currency-list");
 const fromCurrencyBox = document.querySelector(".from-box");
@@ -149,6 +146,28 @@ function selectCurrency(e) {
   const currency = selectedCurrency.cloneNode(true);
   selectedCurrencySlot.replaceChild(currency, selectedCurrencySlot.children[0]);
   hideDropdownList(currencyList);
+}
+
+// Hide dropdown list if outside click
+// (It looks just awful, but it works)
+document.body.addEventListener("click", hideIfOutsideClick);
+
+function hideIfOutsideClick(e) {
+  dropdownLists.forEach(function(list) {
+    if (list.classList.contains("show")) {
+      if (
+        !e.target.parentElement.classList.contains("currency-box") &&
+        !e.target.parentElement.parentElement.classList.contains(
+          "currency-box"
+        ) &&
+        !e.target.parentElement.parentElement.parentElement.classList.contains(
+          "currency-box"
+        )
+      ) {
+        hideDropdownList(list);
+      }
+    }
+  });
 }
 
 // Currency filter
