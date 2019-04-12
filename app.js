@@ -47,13 +47,13 @@ function calculate(data) {
 
 function fromZloty(data) {
   data.rate = getCurrencyRate(rates, toCurrencyCode);
-  data.result = amount * data.rate;
+  data.result = amount / data.rate;
   displayResult(data);
 }
 
 function toZloty(data) {
   data.rate = getCurrencyRate(rates, fromCurrencyCode);
-  data.result = amount / data.rate;
+  data.result = amount * data.rate;
   displayResult(data);
 }
 
